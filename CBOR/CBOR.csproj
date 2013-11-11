@@ -34,9 +34,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Tags\DateTimeTag.cs" />
     <Compile Include="Tags\ItemTag.cs" />
     <Compile Include="MajorType.cs" />
     <Compile Include="CBORDecoder.cs" />

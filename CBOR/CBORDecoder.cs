@@ -33,7 +33,7 @@ namespace CBOR
                     dataItem = header.additionalInfo;
 				} else{
 
-					dataItem = (int)header.value;
+					dataItem = (ulong)header.value;
 				}
 			    break;
 			case MajorType.NEGATIVE_INT:
@@ -144,7 +144,14 @@ namespace CBOR
 
             for (int x = header.tags.Count - 1; x >= 0; x --)
             {
-                dataItem = header.tags[x].processData(dataItem);
+                if (header.tags[x].isDataSupported(dataItem))
+                {
+                    dataItem = header.tags[x].processData(dataItem);    
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
 		    return dataItem;
 		}

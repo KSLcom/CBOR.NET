@@ -7,7 +7,7 @@ using System.Numerics;
 using System.Collections.Generic;
 using System.Collections;
 using NUnit.Framework;
-
+using System.Xml;
 namespace CBOR_Test
 {
     [TestFixture]
@@ -131,11 +131,26 @@ namespace CBOR_Test
 
             Assert.IsInstanceOf<BigInteger>(f);
 		}
+
+        [Test]
+        public void DateTime()
+        {
+            byte[] data = new byte[] { 0xc1, 0x1a, 0x51, 0x4b, 0x67, 0xb0 };
+            CBORDecoder decoder = new CBORDecoder(data);
+            var f = decoder.ReadItem();
+
+            Console.WriteLine(f);
+
+            data = new byte[] { 0xc1, 0xfb, 0x41, 0xd4, 0x52, 0xd9, 0xec, 0x20, 0x00, 0x00 };
+            decoder = new CBORDecoder(data);
+            f = decoder.ReadItem();
+
+            Console.WriteLine(f);
+        }
+
         [Test]
         public void TagTest()
         {
-            
-            Assert.AreEqual(1,TagRegistry.tagMap.Count);
 
             ItemTag tag = TagRegistry.getTagInstance(2);
 
