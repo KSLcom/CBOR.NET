@@ -1,0 +1,34 @@
+using System;
+using System.IO;
+using CBOR;
+using System.Web;
+
+namespace CBOR_Test
+{
+	class MainClass
+	{
+		public static void Main (string[] args)
+		{
+			Console.WriteLine ("Hello World!");
+
+			// [1,[_ 2, 3],[4,5]]
+//			byte[] data = new byte[] {0x83, 0x01, 0x9F, 0x02, 0x03, 0xFF, 0x82, 0x04, 0x05};
+
+
+			//[_ -100 ]
+			//byte[] data = new byte[] {0x9F,0x38, 0x63,0xFF};
+
+
+			//{"a": 1, "b": [2, {"a":`01,02,03,04`}]}  
+			byte[] data = new byte[] {0xd9,0xd9,0xf7,0xa2, 0x61, 0x61, 0x01, 0x61, 0x62, 0x82, 0x02, 0xa1,0x61, 0x61,0x44,0x01,0x02,0x03,0x04}; 
+
+			// byte[]{1,2,3,4}
+			//byte[] data = new byte[] {0x44,0x01,0x02,0x03,0x04};
+
+			CBORDecoder decoder = new CBORDecoder(data);
+
+			var f = decoder.ReadItem();
+
+		}
+	}
+}
