@@ -5,12 +5,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CBOR", "CBOR\CBOR.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CBOR_Test", "CBOR_Test\CBOR_Test.csproj", "{3D536C8F-2E2E-451B-BE82-C25FDC4AC60F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Half", "System.Half\System.Half.csproj", "{1C871681-737C-45F4-9CE4-045366491A46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C871681-737C-45F4-9CE4-045366491A46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C871681-737C-45F4-9CE4-045366491A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C871681-737C-45F4-9CE4-045366491A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C871681-737C-45F4-9CE4-045366491A46}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3D536C8F-2E2E-451B-BE82-C25FDC4AC60F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3D536C8F-2E2E-451B-BE82-C25FDC4AC60F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D536C8F-2E2E-451B-BE82-C25FDC4AC60F}.Release|Any CPU.ActiveCfg = Release|Any CPU

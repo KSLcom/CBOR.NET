@@ -1,19 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CBOR/CBORDecoder.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CBOR_Test/Main.cs">
     <Files>
-      <File FileName="CBOR/MyClass.cs" Line="1" Column="1" />
-      <File FileName="CBOR_Test/Main.cs" Line="24" Column="4" />
-      <File FileName="CBOR/CBORDecoder.cs" Line="84" Column="1" />
-      <File FileName="CBOR/MajorType.cs" Line="18" Column="1" />
-      <File FileName="CBOR/ItemHeader.cs" Line="7" Column="1" />
+      <File FileName="CBOR_Test/Main.cs" Line="28" Column="18" />
+      <File FileName="CBOR/CBORDecoder.cs" Line="58" Column="10" />
+      <File FileName="CBOR/MajorType.cs" Line="14" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/home/tj/CBOR/CBOR/ItemHeader.cs" line="57" />
-      <Breakpoint file="/home/tj/CBOR/CBOR/ItemHeader.cs" line="33" />
-      <Breakpoint file="/home/tj/CBOR/CBOR_Test/Main.cs" line="25" />
+      <Breakpoint file="/home/tj/CBOR/CBOR/ItemHeader.cs" line="66" />
+      <Breakpoint file="/home/tj/CBOR/CBOR/ItemHeader.cs" line="42" />
+      <Breakpoint file="/home/tj/CBOR/CBOR_Test/Main.cs" line="35" />
+      <Breakpoint file="/home/tj/CBOR/CBOR_Test/Main.cs" line="37" />
+      <Breakpoint file="/home/tj/CBOR/CBOR/CBORDecoder.cs" line="114" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

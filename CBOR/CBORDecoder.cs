@@ -90,6 +90,44 @@ namespace CBOR
 				}
 
 				return dict;
+			case MajorType.FLOATING_POINT_OR_SIMPLE:
+				if (header.additionalInfo < 24)
+				{
+					switch(header.additionalInfo)
+					{
+						case 20:
+							return false;
+						case 21:
+							return true;
+						case 22:
+							return null;
+						case 23:
+							return null;
+					}
+				}
+
+				if (header.additionalInfo == 24)
+				{
+					// no simple value in range 32-255 has been defined
+					throw new Exception();
+				}
+
+				if (header.additionalInfo == 25)
+				{
+					Half halfValue = Half.ToHalf(BitConverter.GetBytes(header.value),0);
+
+					return (float)halfValue;
+				} else if (header.additionalInfo == 26)
+				{
+					// single (32 bit) precision float value
+					return BitConverter.ToSingle(BitConverter.GetBytes(header.value),0);
+				} else if (header.additionalInfo == 27)
+				{
+					// double (64 bit) precision float value
+					return BitConverter.ToDouble(BitConverter.GetBytes(header.value),0);
+				}
+				// unknown simple value type
+				throw new Exception();
 			}
 
 			return null;
@@ -126,7 +164,7 @@ namespace CBOR
 		{
 			ItemHeader header = new ItemHeader ();
 
-			header.tags = ReadTags();
+			header.tags = ReadTags ();
 
 			ulong size = 0;
 			byte b = (byte)buffer.ReadByte ();
@@ -136,20 +174,18 @@ namespace CBOR
 				return header;
 			}
 
-			header.majorType = (MajorType) (b >> 5);
+			header.majorType = (MajorType)(b >> 5);
 
 			b &= 0x1f;
 			header.additionalInfo = (ulong)b;
-
-			if (b >= 24 && b <= 27) {
-				b = (byte) (1 << (b - 24));
-				header.value = readUnsigned (b);
-			} else if (b > 27 && b < 31) {
-				throw new Exception ();
-			} else if (b == 31) {
-				header.indefinite = true;
-			}
-
+				if (b >= 24 && b <= 27) {
+					b = (byte)(1 << (b - 24));
+					header.value = readUnsigned (b);
+				} else if (b > 27 && b < 31) {
+					throw new Exception ();
+				} else if (b == 31) {
+					header.indefinite = true;
+				}
 			return header;
 		}
 

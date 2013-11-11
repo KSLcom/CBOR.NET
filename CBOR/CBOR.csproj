@@ -38,4 +38,10 @@
     <Compile Include="ItemHeader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\System.Half\System.Half.csproj">
+      <Project>{1C871681-737C-45F4-9CE4-045366491A46}</Project>
+      <Name>System.Half</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

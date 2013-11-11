@@ -30,6 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -40,6 +41,10 @@
     <ProjectReference Include="..\CBOR\CBOR.csproj">
       <Project>{659260BC-E103-4A08-A7D0-A7FB4369879E}</Project>
       <Name>CBOR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Half\System.Half.csproj">
+      <Project>{1C871681-737C-45F4-9CE4-045366491A46}</Project>
+      <Name>System.Half</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
