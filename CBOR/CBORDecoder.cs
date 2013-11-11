@@ -3,42 +3,47 @@ using System.IO;
 using System.Collections;
 using System.Text;
 using System.Collections.Generic;
+using CBOR.Tags;
 
 
 namespace CBOR
 {
 	public class CBORDecoder
 	{
-		Stream buffer; 
+	    readonly Stream buffer; 
 		public CBORDecoder (Stream s)
 		{
+            TagRegistry.RegisterTagTypes();
 			buffer = s;
 		}
 
 		public CBORDecoder (byte[] data)
 		{
+            TagRegistry.RegisterTagTypes();
 			buffer = new MemoryStream(data);
 		}
 
 		public object ReadItem ()
 		{
 			ItemHeader header = ReadHeader ();
-
+		    object dataItem = null;
 			switch (header.majorType) {
 			case MajorType.UNSIGNED_INT:
 				if (header.value == 0) {
-					return header.additionalInfo;
+                    dataItem = header.additionalInfo;
 				} else{
 
-					return (int)header.value;
+					dataItem = (int)header.value;
 				}
+			    break;
 			case MajorType.NEGATIVE_INT:
 				if (header.value == 0) {
-					return ((long)(header.additionalInfo + 1) * -1);
+					dataItem = ((long)(header.additionalInfo + 1) * -1);
 				} else{
 
-					return ((long)(header.value + 1) * -1);
+					dataItem = ((long)(header.value + 1) * -1);
 				}
+                break;
 			case MajorType.BYTE_STRING:
 				ulong byteLength = header.value == 0 ? header.additionalInfo : header.value;
 
@@ -48,7 +53,8 @@ namespace CBOR
 					bytes[x] = (byte)buffer.ReadByte();
 				}
 
-				return bytes;
+                dataItem = bytes;
+                break;
 			case MajorType.TEXT_STRING:
 				ulong stringLength = header.value == 0 ? header.additionalInfo : header.value;
 
@@ -58,8 +64,8 @@ namespace CBOR
 					data[x] = (byte)buffer.ReadByte();
 				}
 
-				return Encoding.UTF8.GetString (data);
-
+                dataItem = Encoding.UTF8.GetString(data);
+                break;
 			case MajorType.ARRAY:
 				ArrayList array = new ArrayList();
 				if (header.indefinite == false)
@@ -79,7 +85,8 @@ namespace CBOR
 					buffer.ReadByte();
 				}
 
-				return array;
+                dataItem = array;
+                break;
 			case MajorType.MAP:
 				Dictionary<string,object> dict = new Dictionary<string, object>();
 
@@ -89,7 +96,8 @@ namespace CBOR
 					dict.Add((string)ReadItem (),ReadItem ());
 				}
 
-				return dict;
+                dataItem = dict;
+                break;
 			case MajorType.FLOATING_POINT_OR_SIMPLE:
 				if (header.additionalInfo < 24)
 				{
@@ -116,21 +124,29 @@ namespace CBOR
 				{
 					Half halfValue = Half.ToHalf(BitConverter.GetBytes(header.value),0);
 
-					return (float)halfValue;
+                    dataItem = (float)halfValue;
 				} else if (header.additionalInfo == 26)
 				{
 					// single (32 bit) precision float value
-					return BitConverter.ToSingle(BitConverter.GetBytes(header.value),0);
+                    dataItem = BitConverter.ToSingle(BitConverter.GetBytes(header.value), 0);
 				} else if (header.additionalInfo == 27)
 				{
-					// double (64 bit) precision float value
-					return BitConverter.ToDouble(BitConverter.GetBytes(header.value),0);
+				    // double (64 bit) precision float value
+				    dataItem = BitConverter.ToDouble(BitConverter.GetBytes(header.value), 0);
+				}
+				else
+				{
+				    throw new Exception();
 				}
 				// unknown simple value type
-				throw new Exception();
+                break;
 			}
 
-			return null;
+            for (int x = header.tags.Count - 1; x >= 0; x --)
+            {
+                dataItem = header.tags[x].processData(dataItem);
+            }
+		    return dataItem;
 		}
 
 		public List<ItemTag> ReadTags ()
@@ -140,7 +156,7 @@ namespace CBOR
 			byte b = (byte)buffer.ReadByte ();
 
 			while (b >> 5 == 6) {
-				ItemTag tag = new ItemTag();
+				
 
 				ulong extraInfo = (ulong)b & 0x1f;
 				ulong tagNum = 0;
@@ -151,8 +167,7 @@ namespace CBOR
 				}else {
 					tagNum = extraInfo;
 				}
-
-				tag.tagNumber = tagNum;
+			    ItemTag tag = TagRegistry.getTagInstance(tagNum);
 				tags.Add(tag);
 				b = (byte)buffer.ReadByte ();
 			}

@@ -14,10 +14,5 @@ namespace CBOR
 		public bool indefinite {get;set;}
 		public bool breakMarker {get;set;}
 	}
-
-	public class ItemTag
-	{
-		public ulong tagNumber;
-	}
 }
 
