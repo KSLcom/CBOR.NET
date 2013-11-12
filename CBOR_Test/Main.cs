@@ -18,6 +18,32 @@ namespace CBOR_Test
             
         }
         [Test]
+        public void Base64URLDecode()
+        {
+            byte[] data = new byte[] { 0xD8, 0x21, 0x78, 0x1E, 0x61, 0x48, 0x52, 0x30, 0x63, 0x44, 0x6F, 0x76, 0x4C, 0x33, 0x64, 0x33, 0x64, 0x79, 0x35, 0x6C, 0x65, 0x47, 0x46, 0x74, 0x63, 0x47, 0x78, 0x6C, 0x4C, 0x6D, 0x4E, 0x76, 0x62, 0x51 };
+            CBORDecoder decoder = new CBORDecoder(data);
+            var f = decoder.ReadItem();
+            Assert.IsInstanceOf<Uri>(f);
+        }
+
+        [Test]
+        public void CBORItemEmbed()
+        {
+            byte[] data = new byte[] { 0xd8, 0x18, 0x45, 0x64, 0x49, 0x45, 0x54, 0x46 };
+            CBORDecoder decoder = new CBORDecoder(data);
+            var f = decoder.ReadItem();
+            Assert.IsInstanceOf<String>(f);
+        }
+        [Test]
+        public void URIDecode()
+        {
+            byte[] data = new byte[] { 0xd8, 0x20, 0x76, 0x68, 0x74, 0x74, 0x70, 0x3a, 0x2f, 0x2f, 0x77, 0x77, 0x77, 0x2e, 0x65, 0x78, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x2e, 0x63, 0x6f, 0x6d };
+            CBORDecoder decoder = new CBORDecoder(data);
+            var f = decoder.ReadItem();
+            Assert.IsInstanceOf<Uri>(f);
+        }
+
+        [Test]
         public void IndefiniteArray()
         {
             //[_ -100, -100 ]

@@ -9,6 +9,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>CBOR</RootNamespace>
     <AssemblyName>CBOR</AssemblyName>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Tags\Base64URLTag.cs" />
+    <Compile Include="Tags\CBORItemTag.cs" />
     <Compile Include="Tags\DateTimeTag.cs" />
     <Compile Include="Tags\ItemTag.cs" />
     <Compile Include="MajorType.cs" />
@@ -46,6 +50,7 @@
     <Compile Include="Tags\TagRegistry.cs" />
     <Compile Include="ItemHeader.cs" />
     <Compile Include="Tags\UnknownTag.cs" />
+    <Compile Include="Tags\UriTag.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -57,4 +62,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>
