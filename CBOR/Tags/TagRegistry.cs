@@ -6,31 +6,36 @@ namespace CBOR.Tags
     public class TagRegistry
     {
         public static Dictionary<ulong,Type> tagMap = new Dictionary<ulong, Type>();
+        public static bool isInit = false;
 
         public static void RegisterTagTypes()
         {
-            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            if (!isInit)
             {
-                foreach (var type in asm.GetTypes())
+                foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
                 {
-                    if (type.BaseType == typeof (ItemTag))
+                    foreach (var type in asm.GetTypes())
                     {
-                        try
+                        if (type.BaseType == typeof (ItemTag))
                         {
-                            ulong[] tagNum = (ulong[])type.GetField("TAG_NUM").GetValue(null);
-
-                            foreach (ulong l in tagNum)
+                            try
                             {
-                                tagMap.Add(l, type);    
+                                ulong[] tagNum = (ulong[]) type.GetField("TAG_NUM").GetValue(null);
+
+                                foreach (ulong l in tagNum)
+                                {
+                                    tagMap.Add(l, type);
+                                }
                             }
+                            catch (Exception)
+                            {
+                            }
+
                         }
-                        catch (Exception)
-                        {
-                        }
-                        
                     }
                 }
             }
+            isInit = true;
         }
 
         public static ItemTag getTagInstance(ulong tagId)

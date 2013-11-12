@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Tags\Base64URLTag.cs" />
+    <Compile Include="Tags\Base64Tag.cs" />
     <Compile Include="Tags\CBORItemTag.cs" />
     <Compile Include="Tags\DateTimeTag.cs" />
     <Compile Include="Tags\ItemTag.cs" />
@@ -51,6 +51,7 @@
     <Compile Include="ItemHeader.cs" />
     <Compile Include="Tags\UnknownTag.cs" />
     <Compile Include="Tags\UriTag.cs" />
+    <Compile Include="UndefinedValue.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

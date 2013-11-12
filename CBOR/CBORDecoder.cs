@@ -10,7 +10,7 @@ namespace CBOR
 {
 	public class CBORDecoder
 	{
-	    readonly Stream buffer; 
+	    Stream buffer; 
 		public CBORDecoder (Stream s)
 		{
             TagRegistry.RegisterTagTypes();
@@ -22,6 +22,16 @@ namespace CBOR
             TagRegistry.RegisterTagTypes();
 			buffer = new MemoryStream(data);
 		}
+
+	    public void SetDataSource(byte[] data)
+	    {
+	        buffer = new MemoryStream(data);
+	    }
+
+	    public void SetDataSource(Stream s)
+	    {
+	        buffer = s;
+	    }
 
 		public object ReadItem ()
 		{
@@ -110,7 +120,7 @@ namespace CBOR
 						case 22:
 							return null;
 						case 23:
-							return null;
+							return new UndefinedValue();
 					}
 				}
 
@@ -182,6 +192,16 @@ namespace CBOR
 			return tags;
 		}
 
+	    public List<Object> ReadAllItems()
+	    {
+            List<Object> items = new List<object>();
+	        while (buffer.Position < buffer.Length)
+	        {
+	            items.Add(ReadItem());
+	        }
+
+	        return items;
+	    }
 		public ItemHeader ReadHeader ()
 		{
 			ItemHeader header = new ItemHeader ();
