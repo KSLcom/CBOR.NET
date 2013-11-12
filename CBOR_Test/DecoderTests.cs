@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Collections;
 using NUnit.Framework;
 using System.Xml;
-namespace CBOR_Test
+namespace CBOR_Test.Decoder
 {
     [TestFixture]
     public class DecoderTests
@@ -19,6 +19,31 @@ namespace CBOR_Test
         public static void Main(String[] args)
         {
             new DecoderTests().Benchmark();
+        }
+        [Test]
+        public void ExtensionMethods()
+        {
+            byte[] data = new byte[] { 0x9F, 0x38, 0x63, 0x38, 0x63, 0xFF };
+            var f = data.DecodeCBORItem();
+            Assert.IsInstanceOf<ArrayList>(f);
+
+            MemoryStream ms = new MemoryStream(data);
+
+            f = ms.DecodeCBORItem();
+            Assert.IsInstanceOf<ArrayList>(f);
+
+            data = new byte[] { 0x9F, 0x38, 0x63, 0x38, 0x63, 0xFF, 0x9F, 0x38, 0x63, 0x38, 0x63, 0xFF };
+
+            f = data.DecodeAllCBORItems();
+            Assert.IsInstanceOf<List<Object>>(f);
+            Assert.AreEqual(2, (f as List<Object>).Count);
+
+            ms = new MemoryStream(data);
+            f = data.DecodeAllCBORItems();
+            Assert.IsInstanceOf<List<Object>>(f);
+            Assert.AreEqual(2, (f as List<Object>).Count);
+
+            Console.WriteLine(f);
         }
         [Test]
         public void Base64URLDecode()
@@ -127,7 +152,6 @@ namespace CBOR_Test
 			Assert.IsInstanceOf<ArrayList>(list2[1]);
 
 		}
-        [Test]
         public void Benchmark()
         {
             Stopwatch s = new Stopwatch();
@@ -171,7 +195,6 @@ namespace CBOR_Test
 
 		}
 
-        [Test]
         public void LargeDecode()
         {
             byte[] data = new byte[]

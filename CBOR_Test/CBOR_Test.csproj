@@ -41,8 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DynamicJsonConverter.cs" />
-    <Compile Include="Main.cs" />
+    <Compile Include="DecoderTests.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="EncoderTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

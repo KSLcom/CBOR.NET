@@ -8,10 +8,39 @@ using CBOR.Tags;
 
 namespace CBOR
 {
+    public static class CBORDecoderExtensions
+    {
+        public static object DecodeCBORItem(this byte[] data)
+        {
+            MemoryStream ms = new MemoryStream(data);
+            CBORDecoder decode = new CBORDecoder(ms);
+            return decode.ReadItem();
+        }
+
+        public static object DecodeCBORItem(this MemoryStream ms)
+        {
+            CBORDecoder decode = new CBORDecoder(ms);
+            return decode.ReadItem();
+        }
+
+        public static object DecodeAllCBORItems(this byte[] data)
+        {
+            MemoryStream ms = new MemoryStream(data);
+            CBORDecoder decode = new CBORDecoder(ms);
+            return decode.ReadAllItems();
+        }
+
+        public static object DecodeAllCBORItems(this MemoryStream ms)
+        {
+            CBORDecoder decode = new CBORDecoder(ms);
+            return decode.ReadAllItems();
+        }
+    }
+
 	public class CBORDecoder
 	{
 	    Stream buffer; 
-		public CBORDecoder (Stream s)
+        public CBORDecoder (Stream s)
 		{
             TagRegistry.RegisterTagTypes();
 			buffer = s;
@@ -32,6 +61,8 @@ namespace CBOR
 	    {
 	        buffer = s;
 	    }
+
+        
 
 		public object ReadItem ()
 		{
