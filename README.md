@@ -12,12 +12,11 @@ GOAL
 Status
 ========
 * All major types have been accounted for and are processed into their C# native types.
-* Tags are being consumed but currently nothing is done with them
+* A handful of tags are being processed, still more to implement though.
 
 Current Work
 ========
-* Create a test suite of various CBOR encodings and verify Decoder works properly
-* Begin supporting Tags, Positive BigIntegers will the be first Tag to have decoding support
+* Continue implementing tags.
 
 Future
 ========
